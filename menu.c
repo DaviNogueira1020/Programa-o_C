@@ -1,37 +1,39 @@
-//bibliotecas
+//Bibliotecas
 #include <stdio.h>
-#include <string.h>
 #include <locale.h>
 
-//chamar arquivos
+//Chamar arquivos
 #include "jogar.h"
 #include "rank.h"
 
+int main() {
+    // Configurar idioma
+    setlocale(0, "portuguese");
 
-int main(){
+    // Variaveis
+    int escolha;
 
-    // lingua
-    setlocale(0, "Portuguese");
+    // Logica do menu
+    while (1) {  // Loop infinito at√© o usuario escolher "sair"
+        printf("\nMENU: \n [1] Jogar\n [2] Rank\n [3] Sair\nEscolha a op√ß√£o: ");
+        scanf("%d", &escolha); // Resposta digitada pelo usuario
 
-    // Variavel
-    char escolha[10];
-    
-    //logica
-    while(1) {  // Loop infinito/ escolha "sair" ;)
-        printf("Escolha uma opÁ„o: jogar, rank, sair\n");//pergunta menu
-        scanf("%s", escolha); //resposta  digitado
-        
-        //logica
-        if(strcmp(escolha, "jogar") == 0) { //O strcmp  È paara comparaÁ„o
-            jogar(); //chamando a funÁ„o jogar
-        } else if(strcmp(escolha, "rank") == 0) {
-            int resultado = rank(); //chamando a funÁ„o rank
-            printf("O resultado do rank È: %d\n", resultado);
-        } else if(strcmp(escolha, "sair") == 0) {
-            printf("Saindo...\n"); //saindo do loop menu
-            break;
-        } else {
-            printf("OpÁ„o invalida. Tente novamente.\n"); //digitou algo invalido
+        // Logica das op√ß√µes
+        switch (escolha) {
+            case 1:
+                jogar(); // Chamar a fun√ß√£o jogar
+                break;
+            case 2:{
+                    int resultado = rank(); // Chamar a fun√ß√£o rank
+                    printf("O resultado do rank √©: %d\n", resultado);
+                }
+                break;
+            case 3:
+                printf("Saindo...\n"); // Sair do loop
+                return 0;
+            default:
+                printf("Op√ß√£o invalida. Tente novamente.\n"); // Op√ß√£o invalida
+                break;
         }
     }
 }
