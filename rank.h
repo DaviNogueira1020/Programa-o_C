@@ -1,8 +1,28 @@
 #include <stdio.h>
+#include <locale.h>
 
-// FunÁ„o a ser usada externamente
-//botar o rank na funÁ„o ;)
-int rank(){
-    int var = 5 + 5;
-    return var;
+void exibirPontuacoes(const char *nomeArquivo) {
+    FILE *arquivo = fopen(nomeArquivo, "r"); // Abre o arquivo no modo leitura
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo ou arquivo n√£o encontrado.\n");
+        return;
+    }
+
+    printf("\n=== Pontua√ß√µes Registradas ===\n");
+    char nome[50];
+    int pontuacao;
+    while (fscanf(arquivo, "%s %d", nome, &pontuacao) != EOF) {
+        printf("Jogador: %s - Pontua√ß√£o: %d\n", nome, pontuacao);
+    }
+    printf("================================\n");
+
+    fclose(arquivo);
+}
+
+void rank() {
+    setlocale(LC_ALL, "Portuguese");
+
+    const char *nomeArquivo = "pontuacoes.txt";
+    exibirPontuacoes(nomeArquivo);
+
 }
