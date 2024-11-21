@@ -103,6 +103,27 @@ void forca(int estado) {
     }
 }
 
+// Função para o pc tentar uma letra
+char adivinhar_computador(char palavra[], char palavra_tela[]) {
+    char letra;
+    int i;
+    int tentada = 0;
+
+    do {
+        letra = 'A' + rand() % 26;  
+        // Testa a letra usada
+        tentada = 0;
+        for (i = 0; i < strlen(palavra_tela); i++) {
+            if (palavra_tela[i] == letra) {
+                tentada = 1;
+                break;
+            }
+        }
+    } while (tentada);
+
+    return letra;
+}
+
 void jogando() {
     setlocale(LC_ALL, "Portuguese");
 
@@ -138,6 +159,7 @@ void jogando() {
             printf("%c", palavra_tela[i]);
         }
 
+        // Turno do jogador
         printf("\nLetra: ");
         char letra;
         scanf(" %c", &letra);
@@ -164,5 +186,34 @@ void jogando() {
             mostraPontuacao(jogador, erros);
             break;
         }
+
+        // Turno do computador
+        char letra_computador = adivinhar_computador(palavra_secreta, palavra_tela);
+        printf("\n(PC) Segundo jogador escolheu a letra: %c\n", letra_computador);
+
+        int computador_errou = 1;
+        for (int i = 0; i < strlen(palavra_tela); i++) {
+            if (letra_computador == palavra_secreta[i]) {
+                palavra_tela[i] = letra_computador;
+                computador_errou = 0;
+            }
+        }
+        if (computador_errou) {
+            erros++;
+        }
+
+        if (strcmp(palavra_tela, palavra_secreta) == 0) {
+            printf("\nComputador venceu! A palavra era: %s\n", palavra_secreta);
+            mostraPontuacao(jogador, erros);
+            break;
+        }
+
+        if (erros >= 6) {
+            printf("\nVocê perdeu! A palavra era: %s\n", palavra_secreta);
+            mostraPontuacao(jogador, erros);
+            break;
+        }
     }
 }
+
+
